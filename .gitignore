@@ -1,0 +1,32 @@
+# Ignorar el entorno virtual
+venv/
+# Ignorar archivos de configuración sensibles
+config.yaml
+
+# Ignorar archivos de Jupyter Notebook
+.ipynb_checkpoints/
+*.ipynb
+
+# Ignorar archivos de cache de Python
+__pycache__/
+*.py[cod]
+
+# Ignorar archivos de logs
+*.log
+
+# Ignorar archivos de distribución y compilación
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Ignorar archivos temporales
+*.tmp
+*.temp
+*.bak
+
+# Ignorar archivos de entorno de configuración
+.env
+.env.local
+.env.production
+.env.development
