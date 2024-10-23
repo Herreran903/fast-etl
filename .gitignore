@@ -5,7 +5,6 @@ config.yaml
 
 # Ignorar archivos de Jupyter Notebook
 .ipynb_checkpoints/
-*.ipynb
 
 # Ignorar archivos de cache de Python
 __pycache__/
