@@ -1,5 +1,12 @@
-python -m venv venv
-.\venv\Scripts\activate
+
+REM Activar el entorno virtual
+call venv\Scripts\activate
+
+REM Instalar las dependencias
 pip install -r requirements.txt
 
-echo "Setup complete. Run 'venv\Scripts\activate' to activate the virtual environment."
+REM Ejecutar el script de Python
+python main.py
+
+REM Desactivar el entorno virtual (opcional)
+deactivate
