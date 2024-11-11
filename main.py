@@ -13,6 +13,9 @@ notebooks = [
     "dim_time.ipynb",
     "dim_type_novelty.ipynb",
     "fact_novelty.ipynb",
+    "fact_messaging_accumulating.ipynb",
+    "fact_messaging_daily.ipynb",
+    "fact_messaging_time.ipynb",
     "constraints.ipynb"
 ]
 
