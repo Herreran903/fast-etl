@@ -2,6 +2,8 @@ import asyncio
 from asyncio import WindowsSelectorEventLoopPolicy
 import nbformat
 from nbconvert.preprocessors import ExecutePreprocessor
+import yaml
+from sqlalchemy import create_engine, inspect, text
 
 asyncio.set_event_loop_policy(WindowsSelectorEventLoopPolicy())
 
@@ -32,6 +34,33 @@ def run_notebook(notebook_path):
         return False
 
 def main():
+
+    with open('config.yaml') as f:
+        config = yaml.safe_load(f)
+        configDestination = config['destination']
+
+    urlDestination = f"{configDestination['driver']}://{configDestination['user']}:{configDestination['password']}@{configDestination['host']}:{configDestination['port']}/{configDestination['db']}"
+    engineDestination = create_engine(urlDestination)
+
+    with engineDestination.connect() as connection:
+        inspector = inspect(engineDestination)
+        tables = inspector.get_table_names()
+        
+        if tables:
+            print(f"A data warehouse named {configDestination['db']} already exists")
+            print("Please hold on for a moment, everything is being prepared for the loading of the data warehouse")
+            
+            connection.execute(text("SET session_replication_role = 'replica';"))
+            
+            for table in tables:
+                connection.execute(text(f'DROP TABLE IF EXISTS "{table}" CASCADE;'))
+                
+            connection.commit()
+
+            connection.execute(text("SET session_replication_role = 'origin';"))
+
+            print("✅ Everything has been prepared correctly")
+
     print("Running notebooks...")
     all_success = True
 
@@ -41,7 +70,7 @@ def main():
             all_success = False
 
     if all_success:
-        print("All notebooks executed successfully")
+        print("✅ All notebooks executed successfully")
     else:
         print("Some notebooks did not execute successfully")
 
